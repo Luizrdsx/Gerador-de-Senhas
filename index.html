@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <title>Gerador de Senhas Aleatórias</title>
+</head>
+
+<body class="h-screen bg-blue-100 flex items-center justify-center">
+  <div class="w-full max-w-sm">
+    <form class="bg-white p-6 rounded-lg">
+      <div class="mb-4">
+        <label class="block font-medium text-gray-700 mb-2" for="length">
+          Números de Caractéres da Senha:
+        </label>
+        <input class="w-full border border-blue-400 p-2" type="number" min="4" max="32" value="16" id="length" />
+      </div>
+      <div class="mb-4">
+        <label class="block font-medium text-gray-700 mb-2">
+          Opções de Caracteres:
+        </label>
+        <div class="flex items-center">
+          <input class="mr-2" type="checkbox" id="uppercase" checked />
+          <label for="uppercase">Maiúsculas</label>
+        </div>
+        <div class="flex items-center mt-2">
+          <input class="mr-2" type="checkbox" id="lowercase" checked />
+          <label for="lowercase">Minúsculas</label>
+        </div>
+        <div class="flex items-center mt-2">
+          <input class="mr-2" type="checkbox" id="numbers" checked />
+          <label for="numbers">Números</label>
+        </div>
+        <div class="flex items-center mt-2">
+          <input class="mr-2" type="checkbox" id="symbols" checked />
+          <label for="symbols">Símbolos</label>
+        </div>
+      </div>
+      <div class="flex items-center justify-center mt-6">
+        <button class="bg-blue-500 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-full" type="button"
+          onclick="generatePassword()">
+          Gerar Senha
+        </button>
+      </div>
+      <div class="text-center mt-6">
+        <p class="text-gray-400 font-small">Senha gerada aqui 👇 </p>
+        <p class="text-gray-700 font-medium" id="password"></p>
+      </div>
+    </form>
+  </div>
+</body>
+<script>
+  function generatePassword() {
+    const lengthInput = document.getElementById("length");
+    const length = parseInt(lengthInput.value);
+
+    const uppercaseInput = document.getElementById("uppercase");
+    const lowercaseInput = document.getElementById("lowercase");
+    const numbersInput = document.getElementById("numbers");
+    const symbolsInput = document.getElementById("symbols");
+
+    let characters = "";
+    if (uppercaseInput.checked) {
+      characters += "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+    }
+    if (lowercaseInput.checked) {
+      characters += "abcdefghijklmnopqrstuvwxyz";
+    }
+    if (numbersInput.checked) {
+      characters += "0123456789";
+    }
+    if (symbolsInput.checked) {
+      characters += "!@#$%^&*(){}[]=<>/,.";
+    }
+
+    let password = "";
+    for (let i = 0; i < length; i++) {
+      password += characters.charAt(
+        Math.floor(Math.random() * characters.length)
+      );
+    }
+
+    const passwordDisplay = document.getElementById("password");
+    passwordDisplay.innerText = password;
+  }
+</script>
+
+</html>
